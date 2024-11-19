@@ -1,0 +1,134 @@
+<html>
+<head>
+    <title>Cosmic Hello World</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,1));
+            font-family: 'Sofia', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 5px #ffffff, 0 0 10px #00ffcc, 0 0 15px #ff0000;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-top: 100px;
+            cursor: pointer;
+        }
+
+        #planet {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    transform: translateX(-50%) translateY(-50%); 
+    width: 200px;
+    height: 200px;
+    background-image: url('images/planet.png');     background-size: cover; 
+    background-position: center; 
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    animation: rotatePlanet 10s infinite linear;
+    cursor: pointer;
+}
+
+        @keyframes rotatePlanet {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #message {
+            font-size: 30px;
+            margin-top: 30px;
+            color: #00ffcc;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+    <script>
+        var audioPlayed = false;
+
+        
+        function playAudio(url) {
+            if (!audioPlayed) {
+                var audio = new Audio(url);
+                audio.loop = true;
+                audio.play();
+                audioPlayed = true;
+            }
+        }
+
+       
+        function displayPlanetInfo() {
+            var message = document.getElementById('message');
+            message.innerHTML = "Welcome to the Cosmos!";
+            playAudio('images/space_music.mp3'); 
+        }
+
+                function displayHelloWorld() {
+            var message = document.getElementById('message');
+            message.innerHTML = "Hello, World!";
+            playAudio('images/space_music.mp3');
+        }
+
+        // Генерация случайных звезд
+        function generateStars() {
+            var starContainer = document.querySelector('.stars');
+            for (var i = 0; i < 100; i++) {
+                var star = document.createElement('div');
+                star.className = 'star';
+                var size = Math.random() * 3 + 1;
+                var positionX = Math.random() * window.innerWidth;
+                var positionY = Math.random() * window.innerHeight;
+
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.top = positionY + 'px';
+                star.style.left = positionX + 'px';
+                star.style.animationDuration = Math.random() * 1 + 's';
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        // Вызов функции для генерации звезд
+        window.onload = function() {
+            generateStars();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 onclick="displayHelloWorld()">Hello, World!</h1>
+        <div id="planet" onclick="displayPlanetInfo()"></div>
+        <div id="message"></div>
+    </div>
+    <div class="stars"></div>
+</body>
+</html>
